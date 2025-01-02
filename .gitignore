@@ -1,5 +1,8 @@
 golden_model/
 result/
-rlt/
+rtl/
 tests/
 verif/
+vivado/
+*.log
+*.jou

@@ -29,14 +29,24 @@
 | `├── configs.json`         | Configurations                                                     |
 | `├── generate_tests.py`    | Script to generate tests                                           |
 | `├── simulate_model.py`    | Script to generate golden model                                    |
-| `├── simulate_rtl.py`      | Script to run the testbench                                        |
+| `├── simulate_rtl.tcl`     | Script to run the testbench                                        |
 | `└── compare.py`           | Script to compare testbench and golden model results               |
 
 ## How to use?
 
+### Prerequisite
+
+- Install Python.
+- Install `rvvsuite` package.
+- Install Vivado.
+- Add path to vivado to system environment.
+
+### Step-by-Step
+
 - Step 1. Write a `configs.json`.
 - Step 2. Run `generate_tests.py`.
 - Step 3. Run `simulate_model.py`.
-- Step 4. Run `simulate_rtl.py`.
-- Step 5. Run `compare.py`.
-- Step 6. Inspect `result/`.
+- Step 4. Write a `params.txt` that specify parameters for top module (testbench).
+- Step 5. Run `vivado.bat -mode tcl -script simulate_rtl.tcl`.
+- Step 6. Run `compare.py`.
+- Step 7. Inspect `result/`.

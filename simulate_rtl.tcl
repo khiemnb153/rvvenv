@@ -58,13 +58,13 @@ set all_files "$rtl_files $verif_files"
 
 ######### COMPILE RTL ##########
 
-eval exec xvlog -log xvlog.log -sv $all_files
+eval exec xvlog -log xvlog.log $all_files
 
 ########## ELABORATE ###########
 
 set params [get_params $PARAMS_FILE]
 
-eval exec xelab -log xelab.log $params -top tb -snapshot tb_and_snapshot
+eval exec xelab -log xelab.log $params -top tb_RISC_V_TEST -snapshot tb_and_snapshot -timescale 1ns/1ps
 
 ########## SIMULATE ############
 

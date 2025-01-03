@@ -1,2 +1,1 @@
-WIDTH=16
-TEST_PARAM=16
+width=32

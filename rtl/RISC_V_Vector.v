@@ -3,7 +3,9 @@ module RISC_V_Vector #(
     parameter DATA_ADDR_WIDTH = 10, // DMEM_SIZE = 2 ** 10 = 1024
     parameter PC_WIDTH = 10, // IMEM_SIZE = 2 ** 6 = 64 32b-inst, 64 word
     parameter VLEN = 128,
-    parameter width = 32
+    parameter ELEN = 32,
+    parameter IMEM_FILE = "",
+    parameter DMEM_FILE = ""
 )
 
 (
@@ -20,7 +22,9 @@ module RISC_V_Vector #(
             .DATA_ADDR_WIDTH(DATA_ADDR_WIDTH),
             .PC_WIDTH(PC_WIDTH),
             .VLEN(VLEN),
-            .width(width)
+            .ELEN(ELEN),
+            .DMEM_FILE(DMEM_FILE),
+            .IMEM_FILE(IMEM_FILE)
         ) FDatapath (
         .clk(clk),
         .rst_n(rst_n),

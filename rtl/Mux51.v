@@ -9,20 +9,20 @@ sel|o
 */
 
 module Mux51 #(
-    parameter WIDTH = 32
+    parameter ELEN = 32
 ) (
-    input [WIDTH-1:0] i0,
-    input [WIDTH-1:0] i1,
-    input [WIDTH-1:0] i2,
-    input [WIDTH-1:0] i3,
-    input [WIDTH-1:0] i4,
+    input [ELEN-1:0] i0,
+    input [ELEN-1:0] i1,
+    input [ELEN-1:0] i2,
+    input [ELEN-1:0] i3,
+    input [ELEN-1:0] i4,
     input [2:0] sel,
-    output [WIDTH-1:0] o
+    output [ELEN-1:0] o
 );
-    wire [WIDTH-1:0] i012, i34;
+    wire [ELEN-1:0] i012, i34;
 
-    Mux31 #(.WIDTH(WIDTH)) _Mux0(i0, i1, i2, sel[1:0], i012);
-    Mux21 #(.WIDTH(WIDTH)) _Mux1(i3, i4, sel[1], i34);
-    Mux21 #(.WIDTH(WIDTH)) _Mux2(i012, i34, sel[2], o);
+    Mux31 #(.ELEN(ELEN)) _Mux0(i0, i1, i2, sel[1:0], i012);
+    Mux21 #(.ELEN(ELEN)) _Mux1(i3, i4, sel[1], i34);
+    Mux21 #(.ELEN(ELEN)) _Mux2(i012, i34, sel[2], o);
 
 endmodule

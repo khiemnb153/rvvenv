@@ -2,7 +2,9 @@ module XDatapath #(
     parameter VLEN = 128,
     parameter XLEN = 32,
     parameter DATA_ADDR_WIDTH = 10, // DMEM_SIZE = 2 ** 10 = 1024
-    parameter PC_WIDTH = 10 // IMEM_SIZE = 2 ** 6 = 64 32b-inst, 64 word
+    parameter PC_WIDTH = 10, // IMEM_SIZE = 2 ** 6 = 64 32b-inst, 64 word
+    parameter IMEM_FILE = "",
+    parameter DMEM_FILE = ""
 ) (
     input clk,
     input rst_n,
@@ -57,14 +59,14 @@ module XDatapath #(
     wire [PC_WIDTH-1:0] pcOffsetByByte;
     
     ShiftLeft1 #(
-        .WIDTH(PC_WIDTH)
+        .PC_WIDTH(PC_WIDTH)
     ) _PCShifter(
         .i(xImm[PC_WIDTH-1:0]),
         .o(pcOffsetByByte)
     );
 
     Adder #(
-        .WIDTH(PC_WIDTH)
+        .PC_WIDTH(PC_WIDTH)
     ) _PCAdder(
         .addn1(pc),
         .addn2('d4),
@@ -72,7 +74,7 @@ module XDatapath #(
     );
 
     Adder #(
-        .WIDTH(PC_WIDTH)
+        .PC_WIDTH(PC_WIDTH)
     ) _PCBranchAddr(
         .addn1(pc),
         .addn2(pcOffsetByByte),
@@ -81,7 +83,7 @@ module XDatapath #(
 
 // *********CHECK
     Mux31 #(
-        .WIDTH(PC_WIDTH)
+        .ELEN(PC_WIDTH)
     ) _NextPCSel(
         .i0(pcPlus4),
         .i1(pcBranch),
@@ -100,7 +102,8 @@ module XDatapath #(
     );
 
     IMEM #(
-        .PC_WIDTH(PC_WIDTH)
+        .PC_WIDTH(PC_WIDTH),
+        .IMEM_FILE(IMEM_FILE)
     ) _IMEM(
         .pc(pc),
         .inst(inst)
@@ -181,25 +184,33 @@ module XDatapath #(
         .o(AddrMux)
     );
     
-    Mux_DMEM _VWe0(
+    Mux_DMEM #(
+        .XLEN(XLEN)
+    ) _VWe0(
         .i0(32'b0), 
         .i1(VWe0),
         .sel(vm0),
         .o(VWEn0));
     
-    Mux_DMEM _VWe1(
+    Mux_DMEM #(
+        .XLEN(XLEN)
+    ) _VWe1(
         .i0(32'b0), 
         .i1(VWe1),
         .sel(vm1),
         .o(VWEn1));
         
-    Mux_DMEM _VWe2(
+    Mux_DMEM #(
+        .XLEN(XLEN)
+    ) _VWe2(
         .i0(32'b0), 
         .i1(VWe2),
         .sel(vm2),
         .o(VWEn2));
     
-     Mux_DMEM _VWe3(
+     Mux_DMEM #(
+        .XLEN(XLEN)
+    ) _VWe3(
         .i0(32'b0), 
         .i1(VWe3),
         .sel(vm3),
@@ -207,7 +218,8 @@ module XDatapath #(
     
     
     DMEM #(
-        .ADDR_WIDTH(DATA_ADDR_WIDTH)
+        .ADDR_WIDTH(DATA_ADDR_WIDTH),
+        .DMEM_FILE(DMEM_FILE)
     ) _DMEM(
         .clk(clk),
         

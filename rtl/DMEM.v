@@ -1,5 +1,6 @@
 module DMEM #(
-    parameter ADDR_WIDTH = 10
+    parameter ADDR_WIDTH = 10,
+    parameter DMEM_FILE = ""
 ) (
     input clk,
        
@@ -30,9 +31,12 @@ module DMEM #(
     reg [7:0] mem [MEM_SIZE-1:0];
     integer i;
 
-    initial
-        $readmemb("../tests/test_0/dmem.mem", mem, 0);
-
+    initial begin
+        for(i = 0; i<MEM_SIZE ; i = i+1) begin
+            mem[i] = 8'b0;
+        end
+        $readmemb(DMEM_FILE, mem, 0);
+    end
     always @(posedge clk) begin
 
         if (writeEnable0[0]) mem[addr0+0] <= writeData0[7:0];

@@ -18,7 +18,7 @@ module XRegFile #(
         if (!rst_n) begin
             xregs[0] <= {XLEN{1'b0}};
             for(i = 1; i<32;i = i+1) begin
-                xregs[i] <= {XLEN{1'bx}};
+                xregs[i] <= {XLEN{1'b0}};
             end
         end else begin
             if (writeEnable && writeAddr != 4'd0) begin

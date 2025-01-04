@@ -47,6 +47,10 @@ foreach test $tests {
     # Overide params of top module
     set IMEM_FILE "$test/imem.mem"
     set DMEM_FILE "$test/dmem.mem"
+    set VREG_LOG "$VERIF_DIR/results/$test_name/vreg.log"
+    set XREG_LOG "$VERIF_DIR/results/$test_name/xreg.log"
+    set DMEM_LOG "$VERIF_DIR/results/$test_name/dmem.log"
+    set PC_LOG "$VERIF_DIR/results/$test_name/pc.log"
 
     # Compile RTL
     eval exec xvlog -log xvlog.log $all_files
@@ -56,6 +60,10 @@ foreach test $tests {
         -log xelab.log \
         -generic_top IMEM_FILE=$IMEM_FILE \
         -generic_top DMEM_FILE=$DMEM_FILE \
+        -generic_top VREG_LOG=$VREG_LOG \
+        -generic_top XREG_LOG=$XREG_LOG \
+        -generic_top DMEM_LOG=$DMEM_LOG \
+        -generic_top PC_LOG=$PC_LOG \
         -top tb_RISC_V_TEST \
         -snapshot tb_and_snapshot \
         -timescale 1ns/1ps

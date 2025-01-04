@@ -4,8 +4,14 @@ module tb_RISC_V_TEST();
     parameter DATA_ADDR_WIDTH = 10; // DMEM_SIZE = 2 ** 10 = 1024
     parameter PC_WIDTH = 10; // IMEM_SIZE = 2 ** 6 = 64 32b-inst, 64 word
     parameter VLEN = 128;
-    parameter width = 32;
+    parameter ELEN = 32;
     parameter NUM_REGS = 32; // number of vector registers
+    parameter IMEM_FILE = "";
+    parameter DMEM_FILE = "";
+    parameter VREG_LOG = "";
+    parameter XREG_LOG = "";
+    parameter DMEM_LOG = "";
+    parameter PC_LOG = "";
 
     reg clk;
     reg rst_n;
@@ -15,7 +21,9 @@ module tb_RISC_V_TEST();
         .DATA_ADDR_WIDTH(DATA_ADDR_WIDTH),
         .PC_WIDTH(PC_WIDTH),
         .VLEN(VLEN),
-        .width(width)
+        .ELEN(ELEN),
+        .DMEM_FILE(DMEM_FILE),
+        .IMEM_FILE(IMEM_FILE)
     ) DUT(
         .clk(clk),
         .rst_n(rst_n)
@@ -41,19 +49,19 @@ module tb_RISC_V_TEST();
         clk = 0;
         rst_n = 0;
         initialized = 0; // Chua khoi tao
-        vreg_logfile = $fopen("C:/DoAn1/Document/Vector/rvvenv/verif/results/test_0/vreg.log", "w"); // M? file cho VRegFile
-        xreg_logfile = $fopen("C:/DoAn1/Document/Vector/rvvenv/verif/results/test_0/xreg.log", "w"); // M? file cho XRegFile
-        dmem_logfile = $fopen("C:/DoAn1/Document/Vector/rvvenv/verif/results/test_0/dmem.log", "w");
-        pc_logfile = $fopen("C:/DoAn1/Document/Vector/rvvenv/verif/results/test_0/pc.log", "w");
+        vreg_logfile = $fopen(VREG_LOG, "w"); // Mo file cho VRegFile
+        xreg_logfile = $fopen(XREG_LOG, "w"); // Mo file cho XRegFile
+        dmem_logfile = $fopen(DMEM_LOG, "w");
+        pc_logfile = $fopen(PC_LOG, "w");
         #10
         initialized = 1; // Bat dau theo doi thay doi tu chu ki dau tien
-        rst_n = 1; // Gi?i ph�ng reset
+        rst_n = 1; // Giai phong reset
     end
     
     initial begin
         #5000
-        $fclose(vreg_logfile); // ��ng file VRegFile
-        $fclose(xreg_logfile); // ��ng file XRegFile
+        $fclose(vreg_logfile); // Dong file VRegFile
+        $fclose(xreg_logfile); // Dong file XRegFile
         $fclose(dmem_logfile);
         $fclose(pc_logfile);
         $stop();

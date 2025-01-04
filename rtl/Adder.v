@@ -1,9 +1,9 @@
 module Adder #(
-    parameter WIDTH = 10
+    parameter PC_WIDTH = 10
 ) (
-    input [WIDTH-1:0] addn1,
-    input [WIDTH-1:0] addn2,
-    output [WIDTH-1:0] sum
+    input [PC_WIDTH-1:0] addn1,
+    input [PC_WIDTH-1:0] addn2,
+    output [PC_WIDTH-1:0] sum
 );
     assign sum = addn1 + addn2;
     

@@ -1,5 +1,6 @@
 module IMEM #(
-    parameter PC_WIDTH = 10
+    parameter PC_WIDTH = 10,
+    parameter IMEM_FILE = ""
 ) (
     input [PC_WIDTH-1:0] pc,
     output [31:0] inst
@@ -8,7 +9,7 @@ module IMEM #(
     reg [31:0] mem [0:MEM_SIZE-1];
     
     initial
-        $readmemb("../tests/test_0/imem.mem", mem, 0);
+        $readmemb(IMEM_FILE, mem, 0);
     
     assign inst = mem[pc[PC_WIDTH-1:2]];       
 

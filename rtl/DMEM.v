@@ -1,5 +1,6 @@
 module DMEM #(
-    parameter ADDR_WIDTH = 10
+    parameter ADDR_WIDTH = 10,
+    parameter DMEM_FILE = ""
 ) (
     input clk,
        
@@ -31,7 +32,7 @@ module DMEM #(
     integer i;
 
     initial
-        $readmemb("../tests/test_0/dmem.mem", mem, 0);
+        $readmemb(DMEM_FILE, mem, 0);
 
     always @(posedge clk) begin
 

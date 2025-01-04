@@ -3,7 +3,9 @@ module FinalDatapath #(
     parameter DATA_ADDR_WIDTH = 10, // DMEM_SIZE = 2 ** 10 = 1024
     parameter PC_WIDTH = 10, // IMEM_SIZE = 2 ** 6 = 64 32b-inst, 64 word
     parameter VLEN = 128,
-    parameter width = 32
+    parameter ELEN = 32,
+    parameter IMEM_FILE = "",
+    parameter DMEM_FILE = ""
 )(
     input clk,
     input rst_n,
@@ -37,7 +39,9 @@ module FinalDatapath #(
     .VLEN(VLEN), 
     .XLEN(XLEN), 
     .DATA_ADDR_WIDTH(DATA_ADDR_WIDTH), 
-    .PC_WIDTH(PC_WIDTH)
+    .PC_WIDTH(PC_WIDTH),
+    .DMEM_FILE(DMEM_FILE),
+    .IMEM_FILE(IMEM_FILE)
     ) _XDatapath(
         .clk(clk),
         .rst_n(rst_n),
@@ -71,7 +75,7 @@ module FinalDatapath #(
         .VWB(VWB)
     );
     
-    VDatapath #(.VLEN(VLEN), .width(width)
+    VDatapath #(.VLEN(VLEN), .ELEN(ELEN)
     ) _VDatapath (
         .clk(clk),
         .rst_n(rst_n),

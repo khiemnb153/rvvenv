@@ -1,1 +1,7 @@
-width=32
+ELEN=32
+IMEM_FILE="tests/test_0/imem.mem"
+DMEM_FILE="tests/test_0/dmem.mem"
+VREG_LOG="verif/results/test_0/xreg.log"
+XREG_LOG="verif/results/test_0/vreg.log"
+DMEM_LOG="verif/results/test_0/dmem.log"
+PC_LOG="verif/results/test_0/pc.log"

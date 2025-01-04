@@ -1,9 +1,9 @@
 ########### CONFIGS ############
 
-set SIM_DIR "vivado"
-set RLT_DIR "../rtl"
-set VERIF_DIR "../verif"
-set PARAMS_FILE "../params.txt"
+set SIM_DIR "."
+set RLT_DIR "rtl"
+set VERIF_DIR "verif"
+set PARAMS_FILE "params.txt"
 
 ########### HELPERS ############
 
@@ -41,14 +41,14 @@ proc get_params {file_path} {
 
 ######## CD TO SIM_DIR #########
 
-if {![file isdirectory $SIM_DIR]} {
-    # Directory does not exist, create it
-    file mkdir $SIM_DIR
-    puts "Directory created: $SIM_DIR"
-}
+##if {![file isdirectory $SIM_DIR]} {
+##    # Directory does not exist, create it
+##    file mkdir $SIM_DIR
+##    puts "Directory created: $SIM_DIR"
+##}
 
-cd $SIM_DIR
-puts "Changed to directory: $SIM_DIR"
+##cd $SIM_DIR
+##puts "Changed to directory: $SIM_DIR"
 
 ########## GET FILES ###########
 

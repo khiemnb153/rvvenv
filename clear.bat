@@ -1,3 +1,4 @@
 del /q *.jou
 del /q *.log
-rmdir /s /q vivado
+del /q *.pb
+rmdir /s /q xsim.dir

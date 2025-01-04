@@ -1,9 +1,8 @@
 ########### CONFIGS ############
 
-set SIM_DIR "vivado"
-set RLT_DIR "../rtl"
-set VERIF_DIR "../verif"
-set PARAMS_FILE "../params.txt"
+set RLT_DIR "rtl"
+set VERIF_DIR "verif"
+set TESTS_DIR "tests"
 
 ########### HELPERS ############
 
@@ -22,50 +21,45 @@ proc get_files {dir} {
     return $filelist
 }
 
-
-proc get_params {file_path} {
-    set params ""
-    
-    set file_id [open $file_path r]
-    
-    # Read the file line by line
-    while {[gets $file_id line] >= 0} {
-        # Prepend "-generic_top" to each line
-        append params "-generic_top $line "
+proc get_tests {tests_dir {pattern *} {types ""}} {
+    # Construct the glob command options based on the inputs
+    set options "-directory $tests_dir $pattern"
+    if {$types ne ""} {
+        append options " -types $types"
     }
-    
-    close $file_id
-    
-    return $params
+
+    return [eval glob $options]
 }
 
-######## CD TO SIM_DIR #########
+############ MAIN ##############
 
-if {![file isdirectory $SIM_DIR]} {
-    # Directory does not exist, create it
-    file mkdir $SIM_DIR
-    puts "Directory created: $SIM_DIR"
-}
-
-cd $SIM_DIR
-puts "Changed to directory: $SIM_DIR"
-
-########## GET FILES ###########
-
+# Get design and testbench files
 set rtl_files [get_files $RLT_DIR]
 set verif_files [get_files $VERIF_DIR]
 set all_files "$rtl_files $verif_files"
 
-######### COMPILE RTL ##########
+# Get tests
+set tests [get_tests $TESTS_DIR "*" "d"]
 
-eval exec xvlog -log xvlog.log $all_files
+foreach test $tests {
+    set test_name [file tail $test]
+    file mkdir "$VERIF_DIR/results/$test_name"
+    # Overide params of top module
+    set IMEM_FILE "$test/imem.mem"
+    set DMEM_FILE "$test/dmem.mem"
 
-########## ELABORATE ###########
+    # Compile RTL
+    eval exec xvlog -log xvlog.log $all_files
 
-set params [get_params $PARAMS_FILE]
-
-eval exec xelab -log xelab.log $params -top tb_RISC_V_TEST -snapshot tb_and_snapshot -timescale 1ns/1ps
-
-########## SIMULATE ############
-
-exec xsim -log xsim.log -R tb_and_snapshot
+    # Elabrate
+    eval exec xelab \
+        -log xelab.log \
+        -generic_top IMEM_FILE=$IMEM_FILE \
+        -generic_top DMEM_FILE=$DMEM_FILE \
+        -top tb_RISC_V_TEST \
+        -snapshot tb_and_snapshot \
+        -timescale 1ns/1ps
+    
+    # Simulate
+    exec xsim -log xsim.log -R tb_and_snapshot
+}

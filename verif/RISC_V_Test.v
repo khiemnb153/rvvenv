@@ -59,7 +59,7 @@ module tb_RISC_V_TEST();
     end
     
     initial begin
-        #10 wait(DUT.inst_out == 32'b0);
+        #20 wait(DUT.inst_out == 32'b0);
         $fclose(vreg_logfile); // Dong file VRegFile
         $fclose(xreg_logfile); // Dong file XRegFile
         $fclose(dmem_logfile);

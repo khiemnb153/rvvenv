@@ -9,7 +9,7 @@ CONFIGS = {
     'elen': 32,
     'vlen': 128,
     'cycle': 10,
-    'cycle_offset': 1,
+    'cycle_offset': 0.5,
 }
 
 def load_imem(file_path):

@@ -51,6 +51,7 @@ foreach test $tests {
     set XREG_LOG "$VERIF_DIR/results/$test_name/xreg.log"
     set DMEM_LOG "$VERIF_DIR/results/$test_name/dmem.log"
     set PC_LOG "$VERIF_DIR/results/$test_name/pc.log"
+    set DATA_ADDR_WIDTH 12
 
     # Compile RTL
     eval exec xvlog -log xvlog.log $all_files
@@ -64,6 +65,7 @@ foreach test $tests {
         -generic_top XREG_LOG=$XREG_LOG \
         -generic_top DMEM_LOG=$DMEM_LOG \
         -generic_top PC_LOG=$PC_LOG \
+        -generic_top DATA_ADDR_WIDTH=$DATA_ADDR_WIDTH \
         -top tb_RISC_V_TEST \
         -snapshot tb_and_snapshot \
         -timescale 1ns/1ps

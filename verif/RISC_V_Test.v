@@ -60,6 +60,7 @@ module tb_RISC_V_TEST();
     
     initial begin
         #20 wait(DUT.inst_out == 32'b0);
+        #20
         $fclose(vreg_logfile); // Dong file VRegFile
         $fclose(xreg_logfile); // Dong file XRegFile
         $fclose(dmem_logfile);
@@ -130,7 +131,7 @@ end
 // PC
     always @(posedge clk) begin
         if(initialized) begin
-            if(DUT.FDatapath._XDatapath._IMEM.inst !== 32'hxxxxxxxx) begin
+            if(DUT.FDatapath._XDatapath._IMEM.inst !== 32'hxxxxxxxx && DUT.FDatapath._XDatapath._IMEM.pc > 10'd0) begin
                 $fwrite(pc_logfile, "Time=%0d PC=0x%3h\n", 
                                 $time - clk_period, DUT.FDatapath._XDatapath._IMEM.pc);
             end

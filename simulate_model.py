@@ -57,11 +57,12 @@ def main():
         imem = load_imem(f'{TESTS_DIR}/{test}/imem.mem')
         dmem = load_dmem(f'{TESTS_DIR}/{test}/dmem.mem')
         
-        # Run simulation
-        sim = simulator(imem, dmem, CONFIGS, debug_mode=True)
-        changelog = sim.run()
-
         os.makedirs(f'{OUTPUT_DIR}/{test}', exist_ok=True)
+ 
+       
+        # Run simulation
+        sim = simulator(imem, dmem, CONFIGS, debug_mode=True, log=f'{OUTPUT_DIR}/{test}/simulate_model.log')
+        changelog = sim.run()
 
         f_pc = open(f'{OUTPUT_DIR}/{test}/pc.log', 'w')
         f_xreg = open(f'{OUTPUT_DIR}/{test}/xreg.log', 'w')
@@ -99,7 +100,6 @@ def main():
         f_vreg.close()
         f_dmem.close()
 
-        break
 
 
 if __name__ == '__main__':

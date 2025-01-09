@@ -131,7 +131,7 @@ module XDatapath #(
 
     XALUControl _XALUControl (
         .aluOp(xALUOp),
-        .funct({inst[30], inst[14:12]}),
+        .funct({inst[5], inst[14:12]}),
         .Opcode(opcode),
         .aluSel(xALUSel)
     );
@@ -254,7 +254,7 @@ module XDatapath #(
     
     DataExt _DataExt0(
         .dataIn(memData[31:0]),
-        .mode(inst[14]),
+        .mode(inst[13]),
         .readEnable(REn0),
         .opcode(opcode),
         .dataOut(WBData0)
@@ -262,7 +262,7 @@ module XDatapath #(
     
     DataExt _DataExt1(
         .dataIn(memData[63:32]),
-        .mode(inst[14]),
+        .mode(inst[13]),
         .readEnable(REn1),
         .opcode(opcode),
         .dataOut(WBData1)
@@ -270,7 +270,7 @@ module XDatapath #(
     
     DataExt _DataExt2(
         .dataIn(memData[95:64]),
-        .mode(inst[14]),
+        .mode(inst[13]),
         .readEnable(REn2),
         .opcode(opcode),
         .dataOut(WBData2)
@@ -278,7 +278,7 @@ module XDatapath #(
     
     DataExt _DataExt3(
         .dataIn(memData[127:96]),
-        .mode(inst[14]),
+        .mode(inst[13]),
         .readEnable(REn3),
         .opcode(opcode),
         .dataOut(WBData3)

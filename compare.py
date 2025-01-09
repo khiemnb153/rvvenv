@@ -1,4 +1,5 @@
 import os
+import shutil
 
 SIMULATION_RESULT_DIR = 'verif/results'
 GOLDEN_MODEL_DIR = 'golden_model'
@@ -22,15 +23,15 @@ def compare_line_by_line(file, ref):
 
 def check_test(test):
     result = True
-    with open(f'{RESULT_DIR}/{test}.log', 'w') as failed_log:
-        for file in ['pc', 'dmem', 'vreg', 'xreg']:
-            part_result, log = compare_line_by_line(
-                f'{SIMULATION_RESULT_DIR}/{test}/{file}.log',
-                f'{GOLDEN_MODEL_DIR}/{test}/{file}.log',
-            )
-            if part_result == False:
+    for file in ['pc', 'dmem', 'vreg', 'xreg']:
+        part_result, log = compare_line_by_line(
+            f'{SIMULATION_RESULT_DIR}/{test}/{file}.log',
+            f'{GOLDEN_MODEL_DIR}/{test}/{file}.log',
+        )
+        if part_result == False:
+            with open(f'{RESULT_DIR}/{test}.log', 'w') as failed_log:
                 failed_log.write(f'{file}: {log}\n')
-                result = part_result
+            result = part_result
 
     return result
 
@@ -54,8 +55,12 @@ def main():
         for file in sorted(tests | refs)
     ]
 
-    # Ensure result directory exists
+
+    # Clear previous result and create new result directory
+    if os.path.exists(RESULT_DIR):
+        shutil.rmtree(RESULT_DIR)
     os.makedirs(RESULT_DIR, exist_ok=True)
+
     overall_log = open(RESULT_DIR + '/overall.log', 'w')
     
     for test, category in classified_tests:

@@ -71,3 +71,5 @@ foreach test $tests {
     # Simulate
     exec xsim -log xsim.log -R tb_and_snapshot
 }
+
+exit

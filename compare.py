@@ -66,7 +66,7 @@ def main():
     for test, category in classified_tests:
         if category == "TESTED":
             result = check_test(test)
-            overall_log.write(f"{test}: {'PASSED' if result else 'FAILED'}\n")
+            overall_log.write(f"{test}: {'PASSED' if result else 'FAILED [x]'}\n")
         else:
             overall_log.write(f'{test}: {category}\n')
 

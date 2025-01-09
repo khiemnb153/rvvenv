@@ -7,29 +7,29 @@ RESULT_DIR = 'result'
 
 def compare_line_by_line(file, ref):
     with open(file, 'r') as f, open(ref, 'r') as r:
-        lines = f.readlines()
-        ref_lines = r.readlines()
+        lines = f.read().splitlines()
+        ref_lines = r.read().splitlines()
 
         if len(lines) != len(ref_lines):
             return False, 'File lengths differ' # is_identical, log
 
         for line_num, (line, ref_line) in enumerate(zip(lines, ref_lines), start=1):
             if line != ref_line:
-                return False, f"Line {line_num}: '{line}'. Expected: '{ref_line}"  # is_identical, log
+                return False, f"Line {line_num}: '{line}'. Expected: '{ref_line}'"  # is_identical, log
             
-        return True
+        return True, ''
 
 
 def check_test(test):
     result = True
     with open(f'{RESULT_DIR}/{test}.log', 'w') as failed_log:
-        for file in ['PC', 'DMEM', 'VReg', 'XReg']:
+        for file in ['pc', 'dmem', 'vreg', 'xreg']:
             part_result, log = compare_line_by_line(
                 f'{SIMULATION_RESULT_DIR}/{test}/{file}.log',
                 f'{GOLDEN_MODEL_DIR}/{test}/{file}.log',
             )
             if part_result == False:
-                failed_log.write(log + '\n')
+                failed_log.write(f'{file}: {log}\n')
                 result = part_result
 
     return result

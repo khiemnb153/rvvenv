@@ -2,6 +2,7 @@ golden_model/
 result/
 tests/
 verif/results/
+coverage_report/
 *.log
 *.jou
 *.pb

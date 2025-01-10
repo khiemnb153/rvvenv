@@ -1,5 +1,6 @@
 from rvvsuite import simulator
 import os
+import json
 from math import ceil
 
 TESTS_DIR = 'tests'
@@ -62,7 +63,10 @@ def main():
        
         # Run simulation
         sim = simulator(imem, dmem, CONFIGS, debug_mode=True, log=f'{OUTPUT_DIR}/{test}/simulate_model.log')
-        changelog = sim.run()
+        changelog, stats = sim.run()
+
+        with open(f'{OUTPUT_DIR}/{test}/stats.json', 'w') as f_stat:
+            json.dump(stats, f_stat, indent=4)
 
         f_pc = open(f'{OUTPUT_DIR}/{test}/pc.log', 'w')
         f_xreg = open(f'{OUTPUT_DIR}/{test}/xreg.log', 'w')

@@ -1,5 +1,6 @@
 from rvvsuite import generator, assembler
 import os
+import math
 
 CONFIG_FILE = 'configs.json'
 OUTPUT_DIR = 'tests'
@@ -34,17 +35,19 @@ def main():
 
         ############ Output ############
 
-        os.makedirs(f'{OUTPUT_DIR}/{test_prefix}{i}', exist_ok=True)
+        test_dir = f'{OUTPUT_DIR}/{test_prefix}{str(i).zfill(math.ceil(math.log10(num_of_test)))}'
 
-        f = open(f'{OUTPUT_DIR}/{test_prefix}{i}/assembly.S', 'w')
+        os.makedirs(test_dir, exist_ok=True)
+
+        f = open(f'{test_dir}/assembly.S', 'w')
         f.write(assembly)
         f.close()
 
-        f = open(f'{OUTPUT_DIR}/{test_prefix}{i}/dmem.mem', 'w')
+        f = open(f'{test_dir}/dmem.mem', 'w')
         f.write(dmem)
         f.close
 
-        f = open(f'{OUTPUT_DIR}/{test_prefix}{i}/imem.mem', 'w')
+        f = open(f'{test_dir}/imem.mem', 'w')
         f.write(imem)
         f.close
 

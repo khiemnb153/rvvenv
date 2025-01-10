@@ -21,7 +21,7 @@ module VALU(
                 5'b00101: result = opd1 ^ opd2; // vxor
                 5'b00110: result = opd1 << opd2[4:0]; // vsll
                 5'b00111: result = opd1 >> opd2[4:0]; // vsrl
-                5'b01000: result = opd1 >>> opd2[4:0]; // vsra 
+                5'b01000: result = $signed(opd1) >>> opd2[4:0]; // vsra
                 5'b01001: result = (opd1 == opd2) ? 32'b1 : 32'b0; // vmseq
                 5'b01010: result = (opd1 != opd2) ? 32'b1 : 32'b0; // vmsne
                 5'b01011: result = (opd1 < opd2) ? 32'b1 : 32'b0; // vmsltu

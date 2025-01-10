@@ -1,5 +1,5 @@
 {
-  "num_of_tests": 5,
+  "num_of_tests": 20,
   "num_of_insts": 20,
   "test_prefix": "test_",
   "v_arith": 14,
